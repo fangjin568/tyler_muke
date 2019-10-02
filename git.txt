@@ -1,0 +1,81 @@
+
+		添加远程仓库
+
+ssh-keygent -t rsa -C "2272558745@qq.com"		--创建ssh key
+
+
+ssh - T git@github.com		--查看是否连接成功
+
+
+
+		添加远程仓库
+
+
+
+echo "# tyler_gitfj" >> README.md
+
+
+git init		--初始化版本库
+
+							
+git add README.md		--添加到版本库
+
+
+git commit -m "first commit"		--提交文件
+
+
+git remote add origin git@github.com:fangjin568/tyler_gitfj.git
+
+
+git pull origin master 
+
+
+git push -u origin master
+
+
+git status			--查看仓库状态
+
+
+pwd		--显示目录
+
+
+ll		--显示文件信息
+
+
+cd ..		--返回上一级
+
+
+ls		--查看目录
+
+
+mkdir 文件名		--创建文件
+
+
+ls -a		--查看目录下的所有文件包括隐藏文件
+
+
+echo "要追加的内容" >> 文件名		--追加文件内容
+
+
+clear		--清屏
+
+
+git reset HEAD 文件名.后缀		--回滚
+
+
+git checkout -- 文件名.后缀		--清空版本库
+
+
+git log		--查看提交信息历史记录
+
+
+git reset --hard 提交信息历史记录的commit编号		--回滚到编号记录
+
+
+git rm 文件名.后缀		--清空删除文件
+
+
+vim 文件名.后缀		--进入文件操作
+(insert 添加文件		:wq保存加退出文件		:q退出)
+
+

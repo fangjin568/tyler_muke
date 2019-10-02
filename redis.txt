@@ -1,0 +1,315 @@
+针对CentOS 7
+
+
+ip addr  			--查看ip地址
+
+
+
+如果发现没有inet属性
+
+使用下面的命令
+
+vi /etc/sysconfig/network-scripts/ifcfg-ens33
+
+将ONBOOT=no改为yes
+
+然后启动网卡使用如下命令
+
+service network start
+
+就可以再用 ip addr查看虚拟机ip地址
+
+Ctrl+c停止启动模式
+
+tar -zxvf 压缩包名称			--解压
+
+解压完成后
+
+输入make进行编译
+
+make完成后
+
+输入如下的命令安装
+make PREFIX=/usr/local/redis install
+
+cp 文件名	复制的路径		--复制文件
+
+yum -y install vim*			--安装vim编辑插件
+
+
+./bin/redis-server ./redis.conf		--启动redis
+
+ps -ef | grep -i redis			--查找redis
+
+kill -9 进程id		--杀掉进程			--不建议使用
+
+./bin/redis-cli shutdown		--关闭redis
+
+./bin/redis-cli 			--进入redis客户端		连接redis客户端
+
+set 键 值			--redis数据库添加数据
+
+get 键			--redis数据库查找数据
+
+del 键			--redis数据库删除数据
+
+keys *			--查找所有key
+
+getset 键	值		--先获取查看再赋值			
+
+
+关于centos7下/etc/sysconfig/目录没有iptables问题
+
+在新买的centos7服务器中想打开防火墙，采用传统centos6的方式用service iptables restart/stop/status 之后报错：
+
+而在/etc/sysconfig/目录下也没有iptables文件。
+
+这是因为centos7与centos6的区别。
+
+
+
+解决办法：
+
+不管防火墙关没关，都是用systemctl stop firewalld 关闭防火墙。
+
+然后使用yum install iptables-services 安装或者更新服务
+
+
+
+SpringBoot连接Redis服务出现DENIED Redis is running in protected mode because protected mode is enabled
+
+
+
+解决方法：是说Redis服务处于保护模式，我们需要修改配置文件redis.conf。将NETWORK下的protected-mode yes修改
+
+为protected-mode no，然后重启服务（./bin/redis-server ./redis.conf）
+
+
+
+
+
+
+
+
+vim /etc/sysconfig/iptables		--编辑防火墙设置
+
+systemctl start firewalld		--启动防火墙
+
+systemctl stop firewalld		--关闭防火墙
+
+firewall-cmd --state			--查看防火墙状态
+
+incr 键			--递增		没找到这个的值的话初始值为零的值然后加1
+
+decr 键			--递减		没找到这个的值的话初始值为零的值然后减1
+
+incrby 键	值		--在原有的基础上加值    没找到这个的值的话初始值为零的值然后加值
+
+decrby 键	值		--在原有的基础上减值    没找到这个的值的话初始值为零的值然后减值
+
+append 键 值		--追加值(字符串)		没有这个键就是自动创建一个set key value
+
+
+				hash常用命令
+
+
+
+hset 集合名字	键 		值			--存值
+
+hget 集合名字	键			--取这个键的值
+
+hmset 集合名字	键		值		键		值		--存多个键值对
+
+hmget 集合名字	键	键		--可以取多个键值对
+
+hgetall 集合名字			--获取集合里面的所有属性和值
+
+hdel		集合名字	键 键		--删除掉多个键对应的值
+
+del		集合名字		--删除掉整个集合
+
+hincrby	集合名字	键	要递增的值	
+
+--递增
+
+--递减同理
+
+hexists	集合名字	键		--判断是否存在这个属性
+
+hlen		集合名字		--查看集合属性数量
+Hkeys 集合名字			--查看集合里的所有键
+
+Hvals	集合名字		--查看集合里的所有值
+
+
+
+				list常用命令
+
+lpush   mylist 	a b c		--从左侧索引插入数据
+
+rpush mylist	a b c		--从右侧索引插入数据
+
+lrange mylist 	0    5		--输出0到5的数据
+
+lrange mylist	0   -1		--输出0到倒数第1个
+
+lpop mylist	--从左边弹出第一个数据，弹出了就查不到
+
+rpop mylist 	--从右边弹出第一个数据，弹出了就查不到
+
+llen mylist		--查看list集合里的数据个数		没有是0
+
+lpushx mylist x	--如果有mylist这个集合就会把x插入的头部    否则不会插入x
+
+rpushx mylist y	--和lpushx相反
+
+lrem mylist 2 3	--从头到尾删除2个3
+
+lrem mylist -2 1 	--从尾到头删除2个1
+
+lrem mylist 0 2	--删除集合里的所有2
+
+lset mylist 3 mmm	--从头部第三个插入	mmm在第4位置
+
+linsert mylist before b 11	--从头到尾第一个b前插入11	11在b前面
+
+linsert mylist after b 22	--从头到尾第一个b后插入22	22在b后面
+
+rpoplpush mylist2 mylist3	--将mylist2最后一个数据弹出插入到mylist3第一个
+
+			Redis的数据结构
+			存储set常用命令
+
+sadd myset a b c		--插入abc数据
+
+sadd myset a		--不允许插入相同的数据
+
+srem myset a b		--删除ab数据
+
+smembers	myset		--查看myset里的所有数据
+
+sismember myset a		--查看myset是否有a这个值	有返回1否则返回0
+
+sdiff mya1 myb1		--查看mya1和myb1相差的数据     查到的是mya1里myb1没有的数据
+
+sinter mya1 myb1		--查看mya1里和myb1里都有的数据
+
+sunion mya1 myb1		--合并数据，并集运算
+
+scard myset		--得到集合里的数量
+
+srandmember myset		--随机返回set集合里的一个数据
+
+sdiffstore my1 mya1 myb1		--将mya1和myb1相差的数据存到my1中
+
+sinterstore my2 mya2 myb2		--将mya2和myb2相同的数据存到my2中
+
+sunionstore my3 mya3 myb3 		--将mya3和myb3并集的数据存到my3中
+
+		
+			存储Sorted - set常用命令
+
+
+zadd mysort 70 zs 80 ls 90 ww 		--新建集合并添加数据  前面是值后面是键
+
+zadd mysort 100 zs			--如果已经有了zs则会吧100替换70否则会新增一个zs 为100的数据
+
+zscore mysort zs		--查看为zs的值
+
+zcard mysort		--查看集合里的数据条数
+
+zrem mysort ls ww		--删除键为ls  ww的数据
+
+zrange mysort 0 -1		--查看集合里第一个到最后一个的键
+
+zrange mysort 0 -1 withscores		--查看集合里第一个到最后一个的键和值由小到大排序
+
+zrevrange mysort 0 -1 withscores	--查看集合里第一个到最后一个的键和值由大到小排序
+
+zremrangebyrank mysort 0 4		--删除集合里第一个到第四个的数据
+
+zremrangebyscore mysort 80 100	--删除集合里80到100的数据包括80和100
+
+zrangebyscore mysort 0 100		--查看0到100之间的键，包括0和100
+
+zrangebyscore mysort 0 100 withscores	--查看0到100之间的键和值
+
+ zrangebyscore mysort 0 100 withscores limit 0 2	--查看0到100之间的键值只查看前2-0条数据
+
+zincrby mysort 3 ls			--给指定的ls加3	要减的话用负数
+
+zcount mysort 80 90 		--查看80 到90 之间的条数包括80和90
+
+			Keys 通用操作
+
+
+keys *		--查看所有键,集合的名字
+
+keys my*		--查看所有键开头是my键
+
+rename
+
+exists my1		--查看是否存在my1这个键有返回1没有返回0
+
+rename company newcompany	--重命名把company 修改成newcompany
+
+expire my1			--设置过期时间
+			
+ttl my1				--查看过时时间没有设置过期时间则是负-1 没有my1键则是-2
+
+type mysort			--查看指定key的类型
+
+			Redis特性
+
+redis一共有15个数据库默认进入第0号数据库
+
+move myset 1		--将当前数据库的myset键值移动到1号数据库中
+
+multi		--开启一段事务
+
+ exec		--提交
+
+ discard		--回滚
+
+演示
+
+set num 1
+
+multi	//开启事务
+
+incr num		//累加
+
+incr numm	//累加
+
+exec		//提交
+
+multi	//开启事务
+
+incr num		//累加
+
+incr numm	//累加
+
+discard		//回滚
+
+
+
+
+
+
+
+ 		
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
