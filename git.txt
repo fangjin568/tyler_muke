@@ -6,6 +6,13 @@ ssh-keygent -t rsa -C "2272558745@qq.com"		--创建ssh key
 
 ssh - T git@github.com		--查看是否连接成功
 
+		克隆仓库
+
+git clone git@github.com:tylerdemo/demo4.git
+
+上传文件不需要git push -u origin master添加分支后上传
+
+直接使用git push同步文件
 
 
 		添加远程仓库
@@ -31,6 +38,47 @@ git pull origin master
 
 
 git push -u origin master
+
+
+已经连接了分支直接使用git push同步到github上
+git push 
+
+
+		标签管理
+
+git tag 			--查看所有标签
+
+
+git tag name 		--创建标签
+
+
+git tag -a name -m	"comment"	--指定提交信息
+
+
+git tag -d name		--删除标签
+
+
+git push origin name	--标签发布
+
+
+
+		分支管理
+
+git branch name		--创建分支
+
+
+git branch		--查看所有分支
+
+
+git checkout name		--切换分支
+
+
+git merge name 		--合并分支
+
+
+git branch -d name		-删除分支
+
+
 
 
 git status			--查看仓库状态
